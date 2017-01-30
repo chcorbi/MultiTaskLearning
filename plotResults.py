@@ -30,18 +30,18 @@ def plot_results(X,y, name, n_splits=5, gridsearch=False):
     for i,size in enumerate(test_size):
         print ("======================= %d / %d : test_size=%f =======================" % (i+1,len(test_size),size))
         
-        # Run ASO
+        print("------------Run ASO...")
         lbda = np.ones((1,m))*0.225
         ASO = AlternatingStructureOptimization(lbda=lbda,m=m, d=X.shape[1]-1, h=3)
         nrMSE_ASO.append(compute_scores(X,y, ASO, n_splits=splits, test_size=size)[0])
 
-        # Run cASO
+        print("------------Run cASO...")
         alpha = 0.225
         beta = 0.15
         cASO = ConvexAlternatingStructureOptimization(alpha=alpha, beta=beta,m=m, d=X.shape[1]-1, h=3)
         nrMSE_cASO.append(compute_scores(X,y, cASO, n_splits=splits, test_size=size)[0])
         
-        # Run CTML
+        print("------------Run CMTL...")
         epsilon = 0.5
         epsilon_m = 0.2*epsilon
         epsilon_b = 3.5*epsilon
@@ -51,10 +51,11 @@ def plot_results(X,y, name, n_splits=5, gridsearch=False):
         nrMSE_CMTL.append(compute_scores(X,y, CMTL, n_splits=splits, test_size=size)[0])
         
         if name=="toy":
+           print("------------Run CMTLE...")
            CMTLE = ClusteredLinearRegression(r, m, epsilon_m, epsilon_w, epsilon_b, mu=2.5)
            nrMSE_CMTLE.append(compute_scores(X,y, CMTLE, n_splits=splits, test_size=size)[0])                
 
-        # Run SVM
+        print("------------Run SVM...")
         SVM = mult_ind_SVM(m=m)            
         nrMSE_SVM.append(compute_scores(X,y, SVM, n_splits=splits, test_size=size)[0])
    
@@ -65,8 +66,11 @@ def plot_results(X,y, name, n_splits=5, gridsearch=False):
     if name=='toy':
         ax.plot(test_size,nrMSE_CMTLE, label='Clustered MTL w. clusters')    
     ax.plot(test_size,nrMSE_ASO,label='ASO')
-    ax.set_ylim([0, 0.35])
-    ax.legend(loc='lower right', shadow=True)
+    ax.plot(test_size,nrMSE_cASO,label='cASO')
+    #ax.set_ylim([0, 0.35])
+    ax.set_xlabel('% Test size')
+    ax.set_ylabel('nrMSE')
+    ax.legend(loc='upper right', shadow=True)
     plt.show() 
 
 
