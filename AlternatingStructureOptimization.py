@@ -15,7 +15,7 @@ from scipy.optimize import fmin_l_bfgs_b
 
 class AlternatingStructureOptimization(BaseEstimator):
     
-    def __init__(self, lbda, m, d, h=3, n_iter=5):
+    def __init__(self, lbda, m, d, h, n_iter=5):
         self.m=m
         self.d=d
         self.h=h
@@ -65,7 +65,6 @@ class AlternatingStructureOptimization(BaseEstimator):
 
 def l_bfgs_b(x_init, model, n_iter=500, bounds=None, callback=None, **kwargs):
     """l-BFGS-b algorithm"""
-    #constraints = [(0, model.C)] * x_init.shape[0]
     x, _, _ = fmin_l_bfgs_b(model.loss, x_init, model.grad, bounds=bounds, pgtol=1e-20, callback=callback)
     return x
 

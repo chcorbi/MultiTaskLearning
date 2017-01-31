@@ -15,7 +15,7 @@ from AlternatingStructureOptimization import l_bfgs_b
 
 class ConvexAlternatingStructureOptimization(BaseEstimator):
     
-    def __init__(self, alpha,beta, m, d, h=3, n_iter=5, C=1., s=1):
+    def __init__(self, alpha,beta, m, d, h, n_iter=5, C=1., s=1):
         self.m=m
         self.d=d
         self.h=h

@@ -10,7 +10,7 @@ import sys
 import numpy as np
 from time import time
 from sklearn.model_selection import GridSearchCV, ShuffleSplit
-from loadData import load_toy_dataset, load_school_dataset, load_sarkos_dataset
+from loadData import load_toy_dataset, load_school_dataset, load_sarcos_dataset
 from RandomMTLRegressor import randompred
 from mult_ind_SVM import mult_ind_SVM
 from AlternatingStructureOptimization import AlternatingStructureOptimization
@@ -70,10 +70,19 @@ if __name__=='__main__':
         # Generate dataset     
         if dataset=="toy":
                 X, y, E = load_toy_dataset()
+                C = 1e2
+                r = 3
+                h = 3
         elif dataset=="school":
-                X, y = load_school_dataset()  
-        elif dataset=="sarkos":
-                X, y = load_sarkos_dataset()
+                X, y = load_school_dataset()
+                C = 1e1
+                r = 7
+                h = 3
+        elif dataset=="sarcos":
+                X, y = load_sarcos_dataset()
+                C = 1e4
+                r = 6
+                h = 3
         else:
                 print("Unkown dataset.")
                 sys.exit()
@@ -84,20 +93,19 @@ if __name__=='__main__':
         if algo=="random":
                 modele = randompred()
         elif algo=="svm":
-                modele = mult_ind_SVM(m=m)
+                modele = mult_ind_SVM(m=m, C=C)
         elif algo=="aso":
                 lbda = np.ones((1,m))*0.225
-                modele = AlternatingStructureOptimization(lbda=lbda,m=m, d=X.shape[1]-1, h=3)
+                modele = AlternatingStructureOptimization(lbda=lbda,m=m, d=X.shape[1]-1, h=h)
         elif algo=="caso":
                 alpha = 0.225
                 beta = 0.15
-                modele = ConvexAlternatingStructureOptimization(alpha=alpha, beta=beta,m=m, d=X.shape[1]-1, h=3)
+                modele = ConvexAlternatingStructureOptimization(alpha=alpha, beta=beta,m=m, d=X.shape[1]-1, h=h)
         elif algo=="cmtl":
                 epsilon = 0.5
                 epsilon_m = 0.2*epsilon
                 epsilon_b = 3.5*epsilon
                 epsilon_w = 4.5*epsilon
-                r=3
                 modele = ClusteredLinearRegression(r, m, epsilon_m, epsilon_w, epsilon_b, mu=2.5)
         elif algo=="cmtl_e":
                 epsilon = 0.5

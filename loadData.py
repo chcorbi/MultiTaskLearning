@@ -71,7 +71,6 @@ def load_school_dataset():
     Load School dataset and select the first 27 tasks  for computing reasons
     """
     dataset = scipy.io.loadmat('data/school.mat')
-    m = 139
     FEATURES_COLUMNS = ['Year_1985','Year_1986','Year_1987','FSM','VR1Percentage','Gender_Male','Gender_Female','VR_1','VR_2','VR_3',
                 'Ethnic_ESWI','Ethnic_African','Ethnic_Arabe','Ethnic_Bangladeshi','Ethnic_Carribean','Ethnic_Greek','Ethnic_Indian',
                 'Ethnic_Pakistani','Ethnic_Asian','Ethnic_Turkish','Ethnic_Others','SchoolGender_Mixed','SchoolGender_Male',
@@ -97,9 +96,9 @@ def load_school_dataset():
     return X_df.values, y_df.values
 
     
-def load_sarkos_dataset(set_size=2000):
+def load_sarcos_dataset(set_size=1000):
     """
-    Load SARKOS dataset and select the first 2000 samples for computing reasons
+    Load SARCOS dataset and select the first 2000 samples for computing reasons
     """
     # Load training set
     sarcos_train = scipy.io.loadmat('data/sarcos_inv.mat')
