@@ -18,11 +18,15 @@ Dataset included:
 ## How to use it
 
 - To compute score for a given algorithm on a given dataset, for a test size proportion and a number of splits
-    python computeScores.py school cmtl 5 0.30
+```
+python computeScores.py school cmtl 5 0.30
+```
 Here, we run 5 times CMTL on school dataset with a 30% test size proportion.
 
 - To plot all algorithms scores for a given dataset and a number of splits, iterating on the test size proportion
-   python plotResults.py school 5
+```
+python plotResults.py school 5
+```
 Here, we run 5 times for each algorithm on school dataset. Note that on current implementation, the test size range is [0.30, 0.40, 0.50, 0.60]
 
 
