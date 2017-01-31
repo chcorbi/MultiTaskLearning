@@ -18,7 +18,8 @@ from sklearn.linear_model import LinearRegression
 class ClusteredLinearRegression(BaseEstimator):
     def __init__(self, r, m, epsilon_m, epsilon_w, epsilon_b, E=None, mu=1e0,
                  maxiter=5000, step=1e-8, eps=5e1, verbose=True):
-        """init the params
+        """
+        init the params
         """
         self.r = r
         self.epsilon_m = epsilon_m
@@ -41,17 +42,20 @@ class ClusteredLinearRegression(BaseEstimator):
         self.insp_grad = []
 
     def get_W(self):
-        """return W.
+        """
+        return W.
         """
         return self.W
 
     def get_insp_grad(self):
-        """return lngrad
+        """
+        return lngrad
         """
         return self.insp_grad
 
     def _grad(self, W, X, Y):
-        """compute the gradient of the obj function
+        """
+        compute the gradient of the obj function
         """
         m = len(np.unique(X[:, -1]))
         d = X.shape[1] - 1

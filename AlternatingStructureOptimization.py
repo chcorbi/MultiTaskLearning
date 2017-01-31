@@ -33,6 +33,7 @@ class AlternatingStructureOptimization(BaseEstimator):
         for it in range(self.n_iter):
             if it%10==0:
                 print ("Iteration %d..." %(it+1))
+                
             for l in range(1,self.m):
                 idx=np.where(X[:,self.d]==l)[0]
                 X_l = X[idx,:self.d]
@@ -64,7 +65,9 @@ class AlternatingStructureOptimization(BaseEstimator):
         return 1.- np.sqrt(mean_squared_error(y[:,0], y_pred[:,0]))/(np.max(y[:,0])-np.min(y[:,0]))
 
 def l_bfgs_b(x_init, model, n_iter=500, bounds=None, callback=None, **kwargs):
-    """l-BFGS-b algorithm"""
+    """
+    l-BFGS-b algorithm
+    """
     x, _, _ = fmin_l_bfgs_b(model.loss, x_init, model.grad, bounds=bounds, pgtol=1e-20, callback=callback)
     return x
 
@@ -81,12 +84,16 @@ class optim_ASO():
         self.lbda=lbda
 
     def loss(self, u):
-        """"loss of the optim problem"""
+        """"
+        loss of the optim problem
+        """
         f = np.dot(u.T+np.dot(self.v.T,self.theta), self.X.T)
         return (1./self.n)*np.sum((f-self.y)**2)+self.lbda*np.linalg.norm(u)**2
     
     def grad(self, u):
-        """gradient of the optim problem"""
+        """
+        gradient of the optim problem
+        """
         f = np.dot(u.T+np.dot(self.v.T,self.theta), self.X.T)
         return ((2./self.n)*np.dot(self.X.T,(f-self.y))+(2./self.n)*self.lbda*u)
 

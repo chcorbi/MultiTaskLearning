@@ -17,6 +17,9 @@ from ClusteredRegression import ClusteredLinearRegression
 from computeScores import compute_scores
 
 def plot_results(X,y, name, C, r, h, n_splits=5, gridsearch=False):
+    """
+    Run each modele n_splits times and plot the average nrMSE score
+    """  
     m=len(np.unique(X[:,-1]))    
     test_size = [0.30, 0.40, 0.50, 0.60]
 
